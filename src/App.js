@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
 function App() {
+  const [dateData, setDateData] = useState('');
+  const [duplicatedDates, setDuplicatedDates] = useState([]);
+
+  const handleInputChange = (event) => {
+    setDateData(event.target.value);
+  }
+  const handleCheckDuplicates = () => {
+    const dates = dateData.split(',').map(date => date.trim());
+
+    const dateCounts = {}
+    dates.forEach(date => {
+      dateCounts[date] = (dateCounts[date] || 0) +1;
+  });
+
+  const filteredDates = Object.keys(dateCounts).filter(date => dateCounts[date] > 1);
+  const sortedDates = filteredDates.sort((a, b) => (new Date(b)) - (new Date(a)));
+
+  setDuplicatedDates(sortedDates);
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+        <h1>Duplicate Date Finder</h1>
+        <div className="form-group">
+          <label htmlFor="dateInput">Enter dates:</label>
+          <input type="text" className="form-control" id="dateInput"
+                 value={dateData} onChange={handleInputChange} />
+        </div>
+        <button className="btn btn-primary" onClick={handleCheckDuplicates}>Check Duplicates</button>
+        <h2>Dublicates Dates:</h2>
+        <ul>
+            {duplicatedDates.map((date, index) => (
+              <li key={index}>{date}</li>
+            ))}
+        </ul>
     </div>
   );
 }
