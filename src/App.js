@@ -24,14 +24,14 @@ function App() {
 
   return (
     <div className="container">
-        <h1>Duplicate Date Finder</h1>
+        <h1 className='heading'>Duplicate Date Finder</h1>
         <div className="form-group">
-          <label htmlFor="dateInput">Enter dates:</label>
+          <label htmlFor="dateInput" className='heading'>Enter dates:</label>
           <input type="text" className="form-control" id="dateInput"
                  value={dateData} onChange={handleInputChange} />
         </div>
         <button className="btn btn-primary" onClick={handleCheckDuplicates}>Check Duplicates</button>
-        <h2>Dublicates Dates:</h2>
+        <h2 className='heading'>Dublicates Dates:</h2>
         <ul>
             {duplicatedDates.map((date, index) => (
               <li key={index}>{date}</li>
